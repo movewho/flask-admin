@@ -368,23 +368,35 @@
                 });
                 $el.on('apply.daterangepicker', function(ev, picker) {
                   $(this).val(picker.startDate.format($(this).attr('data-date-format')));
+                  $('.filter-val').trigger("change");
                 });
 
                 $el.on('cancel.daterangepicker', function(ev, picker) {
                   $(this).val('');
+                  $('.filter-val').trigger("change");
                 });
                 return true;
             case 'daterangepicker':
                 $el.daterangepicker({
                   timePicker: false,
                   showDropdowns: true,
-                  separator: ' to ',
+                  autoUpdateInput: false,
                   locale: {
                     format: $el.attr('data-date-format')
                   }
                 },
                 function(start, end) {
                     $('.filter-val').trigger("change");
+                });
+                $el.on('apply.daterangepicker', function(ev, picker) {
+                  let format_date = picker.startDate.format($(this).attr('data-date-format')) + " to " + picker.endDate.format($(this).attr('data-date-format')) 
+                  $(this).val(format_date);
+                  $('.filter-val').trigger("change");
+                });
+
+                $el.on('cancel.daterangepicker', function(ev, picker) {
+                  $(this).val('');
+                  $('.filter-val').trigger("change");
                 });
                 return true;
             case 'datetimepicker':
@@ -422,6 +434,16 @@
                 },
                 function(start, end) {
                     $('.filter-val').trigger("change");
+                });
+                $el.on('apply.daterangepicker', function(ev, picker) {
+                  let format_date = picker.startDate.format($(this).attr('data-date-format')) + " to " + picker.endDate.format($(this).attr('data-date-format')) 
+                  $(this).val(format_date);
+                  $('.filter-val').trigger("change");
+                });
+
+                $el.on('cancel.daterangepicker', function(ev, picker) {
+                  $(this).val('');
+                  $('.filter-val').trigger("change");
                 });
                 return true;
             case 'timepicker':
